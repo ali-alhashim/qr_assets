@@ -1,0 +1,146 @@
+<odoo>
+
+
+
+<record id="view_employee_form_inherit_assets" model="ir.ui.view">
+    <field name="name">hr.employee.form.inherit.assets</field>
+    <field name="model">hr.employee</field>
+    <field name="inherit_id" ref="hr.view_employee_form"/>
+    <field name="arch" type="xml">
+        <div name="button_box" position="inside">
+            <button name="action_view_assets" type="object" class="oe_stat_button" icon="fa-laptop">
+                <field name="asset_count" widget="statinfo" string="Assets"/>
+            </button>
+        </div>
+    </field>
+</record>
+
+
+
+
+    <record id="view_asset_asset_tree" model="ir.ui.view">
+        <field name="name">asset.asset.tree</field>
+        <field name="model">asset.asset</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="serialnumber"/>
+                <field name="type_id" options="{'no_open': True, 'no_create_edit': False}"/>
+                <field name="employee_barcode" optional="hide"/>
+                <field name="employee_id"/>
+                <field name="location_id"/>
+                <field name="status" widget="badge" decoration-info="status == 'assigned'" decoration-warning="status == 'damaged'"/>
+                <field name="value" sum="Total Value"/>
+
+                <field name="company_id" optional="hide"/>
+                <field name="model" optional="hide"/>
+                <field name="department_id" optional="hide"/>
+                <field name="description" optional="hide"/>
+                <field name="color" optional="hide"/>
+                <field name="dimension" optional="hide"/>
+                <field name="qr_image" widget="image" class="oe_avatar" optional="hide"/>
+                <field name="qr_code" optional="hide"/>
+
+            </list>
+        </field>
+    </record>
+
+    <record id="view_asset_asset_pivot" model="ir.ui.view">
+        <field name="name">asset.asset.pivot</field>
+        <field name="model">asset.asset</field>
+        <field name="arch" type="xml">
+            <pivot string="Asset Analysis">
+                <field name="department_id" type="row"/>
+                <field name="status" type="col"/>
+                <field name="value" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_asset_asset_form" model="ir.ui.view">
+        <field name="name">asset.asset.form</field>
+        <field name="model">asset.asset</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="%(action_report_asset_qrcode)d" string="Print QR Label" type="action" class="btn-primary"/>
+                    <field name="status" widget="statusbar" options="{'clickable': '1'}"/>
+                </header>
+                <sheet>
+                    <field name="qr_image" widget="image" class="oe_avatar"/>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="Asset Name"/></h1>
+                    </div>
+                    <group>
+                        <group string="Basic Info">
+                            <field name="model"/>
+                            <field name="serialnumber"/>
+                            <field name="type_id" options="{'no_open': True, 'no_create_edit': False}"/>
+                            <field name="vendor_id"/>
+                        </group>
+                        <group string="Assignment">
+                            <field name="employee_id"/>
+                            <field name="department_id"/>
+                            <field name="location_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+
+
+                    <notebook>
+
+
+                        <page string="Details">
+                            <group>
+                                <field name="value"/>
+                                <field name="color"/>
+                                <field name="dimension"/>
+                                <field name="qr_code" widget="url" readonly="1"/>
+                                <field name="description" placeholder="Enter detailed description here..."/>
+                            </group>
+                        </page>
+
+                        <page string="Photos">
+                            <field name="image_ids" widget="many2many_binary" string="Upload Photos" options="{'accepted_file_extensions': 'image/*'}"/>
+                        </page>
+
+
+                        <page string="Users History">
+                        <field name="history_ids" readonly="1">
+                            <list decoration-info="not returned_date" decoration-muted="returned_date">
+                                <field name="employee_id"/>
+                                <field name="received_date"/>
+                                <field name="returned_date"/>
+                                <field name="note"/>
+                                <button name="is_current" string="Current User" icon="fa-user" invisible="returned_date == False"/>
+                            </list>
+                        </field>
+                        </page>
+
+
+                    </notebook>
+
+
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_asset_asset" model="ir.actions.act_window">
+        <field name="name">Assets</field>
+        <field name="res_model">asset.asset</field>
+        <field name="view_mode">list,form,pivot</field>
+    </record>
+
+    <record id="action_asset_analysis" model="ir.actions.act_window">
+        <field name="name">Asset Analysis</field>
+        <field name="res_model">asset.asset</field>
+        <field name="view_mode">pivot,list</field>
+    </record>
+
+    <menuitem id="menu_qr_assets_root" name="QR Assets" web_icon="qr_assets,static/description/icon.png"/>
+    <menuitem id="menu_assets_main" name="Management" parent="menu_qr_assets_root"/>
+    <menuitem id="menu_asset_list" name="Assets" parent="menu_assets_main" action="action_asset_asset"/>
+    <menuitem id="menu_asset_analysis" name="Analysis" parent="menu_qr_assets_root" action="action_asset_analysis"/>
+</odoo>

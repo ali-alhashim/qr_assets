@@ -1,0 +1,33 @@
+<odoo>
+    <record id="hr_employee_form_inherit_extra" model="ir.ui.view">
+        <field name="name">hr.employee.form.inherit.extra</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <!-- Add a new group at the end of the sheet -->
+            <xpath expr="//sheet" position="inside">
+                <group string="Extra Info">
+                    <field name="arabic_name"/>
+                                                      
+               </group>
+            </xpath>
+        </field>
+    </record>
+
+  <!-- Tree/List view -->
+    <record id="hr_employee_tree_inherit_extra" model="ir.ui.view">
+        <field name="name">hr.employee.tree.inherit.extra</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_tree"/>
+        <field name="arch" type="xml">
+            <!-- Add Arabic Name after the Name field -->
+            <xpath expr="//field[@name='name']" position="before">
+            <field name="barcode"/>
+            </xpath>
+            
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="arabic_name"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

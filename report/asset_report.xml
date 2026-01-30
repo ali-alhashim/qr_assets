@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="paperformat_zebra_label" model="report.paperformat">
+        <field name="name">Zebra Asset Label (2.5x5cm)</field>
+        <field name="default" eval="True"/>
+        <field name="format">custom</field>
+        <field name="page_height">25</field>
+        <field name="page_width">50</field>
+        <field name="orientation">Landscape</field>
+        <field name="margin_top">1</field>
+        <field name="margin_bottom">1</field>
+        <field name="margin_left">1</field>
+        <field name="margin_right">1</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">0</field>
+        <field name="dpi">203</field> </record>
+
+    <record id="action_report_asset_qrcode" model="ir.actions.report">
+        <field name="name">Print Labels (Zebra)</field>
+        <field name="model">asset.asset</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">qr_assets.report_asset_zebra</field>
+        <field name="report_file">qr_assets.report_asset_zebra</field>
+        <field name="paperformat_id" ref="paperformat_zebra_label"/>
+        <field name="binding_model_id" ref="model_asset_asset"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_asset_zebra">
+        <t t-call="web.basic_layout">
+            <div class="page">
+                <style>
+                    /* Reset styles for high-precision thermal printing */
+                    body {
+                        margin: 0;
+                        padding: 0;
+                        background-color: white;
+                    }
+                    .label-wrapper {
+                        width: 50mm;
+                        height: 25mm;
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        padding: 2px;
+                        box-sizing: border-box;
+                        overflow: hidden;
+                        page-break-after: always; /* Crucial for Zebra to stop at each sticker gap */
+                    }
+                    .qr-container {
+                        width: 22mm;
+                        height: 22mm;
+                    }
+                    .qr-img {
+                        width: 100%;
+                        height: 100%;
+                    }
+                    .info-container {
+                        width: 26mm;
+                        padding-left: 2px;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                    }
+                    .asset-title {
+                        font-family: 'Arial', sans-serif;
+                        font-weight: bold;
+                        font-size: 8pt;
+                        line-height: 1;
+                        margin-bottom: 2px;
+                        color: black;
+                        display: -webkit-box;
+                        -webkit-line-clamp: 2;
+                        -webkit-box-orient: vertical;
+                        overflow: hidden;
+                    }
+                    .asset-detail {
+                        font-family: 'Arial', sans-serif;
+                        font-size: 6pt;
+                        line-height: 1.2;
+                        color: #333;
+                    }
+                    .logo-img { max-width: 100%; max-height: 10mm; object-fit: contain; }
+                    .company-footer {
+                        font-family: 'Arial', sans-serif;
+                        font-size: 5pt;
+                        margin-top: 2px;
+                        border-top: 0.1mm solid #ccc;
+                        padding-top: 1px;
+                        text-transform: uppercase;
+                    }
+                </style>
+
+                <t t-foreach="docs" t-as="o">
+                    <div class="label-wrapper">
+                        <div class="qr-container">
+                            <img t-if="o.qr_image" 
+                                 t-att-src="image_data_uri(o.qr_image)" 
+                                 class="qr-img"/>
+                        </div>
+
+                        <div class="info-container">
+                            
+                            <div class="asset-detail">
+                                   <t t-esc="o.id"/>
+                            </div>
+                            <div class="company-footer">
+                                
+                                <img t-if="o.company_id.logo" 
+                             t-att-src="image_data_uri(o.company_id.logo)" 
+                             class="logo-img"/>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </t>
+            </div>
+        </t>
+    </template>
+</odoo>

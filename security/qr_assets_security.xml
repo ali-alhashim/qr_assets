@@ -1,0 +1,13 @@
+<odoo>
+    <data>
+        <record id="group_qr_asset_user" model="res.groups">
+            <field name="name">QR Asset User</field>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+
+        <record id="group_qr_asset_manager" model="res.groups">
+            <field name="name">QR Asset Manager</field>
+            <field name="implied_ids" eval="[(4, ref('qr_assets.group_qr_asset_user'))]"/>
+        </record>
+    </data>
+</odoo>
