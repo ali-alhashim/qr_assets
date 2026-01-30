@@ -1,111 +1,52 @@
-Custom addon for Odoo 19 Community Edition.
+<h1>Asset Management Addon - Odoo 19</h1>
+<p><strong>Custom asset tracking module for Odoo 19 Community Edition</strong></p>
 
-[!IMPORTANT]
-This addon requires the Employees module and must be installed after it.
+<h2>⚠️ Requirements</h2>
+<ul>
+<li>Odoo 19 Community Edition</li>
+<li>Employees module (must be installed first)</li>
+<li>Ubuntu/Linux Mint</li>
+<li>Python 3.10+</li>
+<li>PostgreSQL</li>
+</ul>
 
-Requirements
+<h2>🚀 Quick Installation</h2>
 
-[!NOTE]
-Tested on Ubuntu and Linux Mint
+<h3>1. Clone Odoo</h3>
+<pre><code>git clone https://github.com/odoo/odoo.git --branch 19.0 --depth 1
+cd odoo</code></pre>
 
-Linux (Ubuntu / Linux Mint)
+<h3>2. Setup Addon Directory</h3>
+<pre><code>mkdir myAddon
+# Place your 'asset' module inside myAddon/</code></pre>
 
-Python 3.10+
-
-PostgreSQL
-
-Git
-
-Python venv
-
-Installation
-1. Download Odoo 19 Community
-git clone https://github.com/odoo/odoo.git --branch 19.0 --depth 1
-cd odoo
-
-2. Create Custom Addons Directory
-mkdir myAddon
-
-
-[!TIP]
-Place your addon inside the myAddon folder.
-
-Example structure:
-
-odoo/
-├── addons/
-├── myAddon/
-│   └── asset/
-│       ├── __manifest__.py
-│       ├── models/
-│       ├── views/
-│       └── security/
-└── odoo-bin
-
-3. Create Odoo Configuration File
-
-Create odoo.conf:
-
-[options]
+<h3>3. Create odoo.conf</h3>
+<pre><code>[options]
 addons_path = addons,myAddon
 admin_passwd = admin
 db_host = False
 db_port = False
 db_user = odoo
-db_password = False
+db_password = False</code></pre>
 
-4. Create Python Virtual Environment
-python3 -m venv venv
+<h3>4. Install Dependencies</h3>
+<pre><code>python3 -m venv venv
 source venv/bin/activate
+pip install -r requirements.txt</code></pre>
 
-5. Install Dependencies
-pip install --upgrade pip
-pip install -r requirements.txt
+<h3>5. Run Odoo</h3>
+<pre><code>./odoo-bin -c odoo.conf</code></pre>
+<p>Access: <code>http://localhost:8069</code></p>
 
+<h2>📦 Installation Order</h2>
+<ol>
+<li>Install <strong>Employees</strong> module</li>
+<li>Install <strong>Asset</strong> module</li>
+</ol>
 
-Install OS dependencies:
-
-sudo apt update
-sudo apt install -y \
-  build-essential \
-  python3-dev \
-  libpq-dev \
-  libldap2-dev \
-  libsasl2-dev \
-  libssl-dev \
-  node-less \
-  npm
-
-6. Run Odoo
-./odoo-bin -c odoo.conf
-
-
-Open in browser:
-
-http://localhost:8069
-
-Module Installation Order
-
-[!IMPORTANT]
-You must install modules in this order:
-
-Open Apps
-
-Enable Developer Mode
-
-Search for Employees
-
-Install Employees
-
-Search for Asset
-
-Install MyAddon (Asset)
-
-Notes
-
-[!WARNING]
-This addon works only with Odoo 19 Community Edition
-
-PostgreSQL must be running before starting Odoo
-
-Make sure myAddon is included in addons_path
+<h2>⚠️ Notes</h2>
+<ul>
+<li>Works only with Odoo 19 Community Edition</li>
+<li>PostgreSQL must be running</li>
+<li>Addon path must include 'myAddon'</li>
+</ul>
