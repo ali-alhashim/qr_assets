@@ -1,4 +1,19 @@
 <odoo>
+
+
+    <record id="hr_employee_search_inherit_extra" model="ir.ui.view">
+        <field name="name">hr.employee.search.inherit.extra</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_filter"/>
+        <field name="arch" type="xml">
+            <!-- Add a new group at the end of the sheet -->
+            <xpath expr="//search" position="inside">
+                     <field name="barcode" string="Badge Id"/>
+                    <field name="arabic_name" string="Arabic Name"/>                               
+            </xpath>
+        </field>
+    </record>
+
     <record id="hr_employee_form_inherit_extra" model="ir.ui.view">
         <field name="name">hr.employee.form.inherit.extra</field>
         <field name="model">hr.employee</field>
