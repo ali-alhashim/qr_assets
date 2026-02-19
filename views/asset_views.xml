@@ -15,6 +15,24 @@
     </field>
 </record>
 
+<record id="action_server_print_zebra_labels" model="ir.actions.server">
+  <field name="name">Print Zebra Labels</field>
+  <field name="model_id" ref="model_asset_asset"/>
+  <field name="binding_model_id" ref="model_asset_asset"/>
+  <field name="binding_view_types">list</field>
+  <field name="state">code</field>
+  <field name="code">
+action = {
+    'type': 'ir.actions.act_url',
+    'url': '/asset/print_labels?ids=%s' % ','.join(map(str, records.ids)),
+    'target': 'new',
+}
+  </field>
+</record>
+
+
+
+
 
 
 
@@ -62,8 +80,12 @@
         <field name="model">asset.asset</field>
         <field name="arch" type="xml">
             <form>
-                <header>
-                    <button name="%(action_report_asset_qrcode)d" string="Print QR Label" type="action" class="btn-primary"/>
+               <header>
+                    <button name="action_view_qr_label_html" 
+                            string="View QR Label (HTML)" 
+                            type="object" 
+                            class="btn-primary"/>
+                    
                     <field name="status" widget="statusbar" options="{'clickable': '1'}"/>
                 </header>
                 <sheet>

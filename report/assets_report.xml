@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate="1">
+
+    <!-- Server Action — appears in Action menu in tree view -->
+    <record id="action_server_print_zebra_labels" model="ir.actions.server">
+      <field name="name">Print Zebra Labels</field>
+      <field name="model_id" ref="model_asset_asset"/>
+      <field name="binding_model_id" ref="model_asset_asset"/>
+      <field name="binding_view_types">list</field>
+      <field name="state">code</field>
+      <field name="code">
+action = {
+    'type': 'ir.actions.act_url',
+    'url': '/asset/print_labels?ids=%s' % ','.join(map(str, records.ids)),
+    'target': 'new',
+}
+      </field>
+    </record>
+
+  </data>
+
+  <!-- No noupdate so template changes apply on upgrade -->
+  <data>
+
+    <template id="report_asset_zebra_page">
+      <html>
+        <head>
+          <meta charset="utf-8"/>
+          <title>Print Labels</title>
+          <style>
+            * { margin: 0; padding: 0; box-sizing: border-box; }
+
+            body {
+              background: #f0f0f0;
+              font-family: Arial, sans-serif;
+            }
+
+            .labels-grid {
+              display: flex;
+              flex-wrap: wrap;
+              gap: 10px;
+              padding: 20px;
+              justify-content: flex-start;
+            }
+
+            .zebra-label {
+              width: 50mm;
+              height: 25mm;
+              background: white;
+              border: 1px solid #ccc;
+              display: flex;
+              flex-direction: row;
+              padding: 2mm;
+              overflow: hidden;
+            }
+
+            .qr-section {
+              width: 50%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            }
+
+            .qr-img {
+              width: 20mm;
+              height: 20mm;
+              object-fit: contain;
+              image-rendering: pixelated;
+            }
+
+            .info-section {
+              width: 50%;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              justify-content: center;
+              gap: 2mm;
+              text-align: center;
+            }
+
+            .logo-img {
+              max-width: 15mm;
+              max-height: 8mm;
+              object-fit: contain;
+             
+            }
+
+            .asset-id {
+              font-size: 11pt;
+              font-weight: bold;
+            }
+
+            @media print {
+              body { background: white; }
+
+              .no-print { display: none !important; }
+
+              .labels-grid {
+                padding: 0;
+                gap: 0;
+              }
+
+              .zebra-label {
+                border: none;
+                page-break-inside: avoid;
+                page-break-after: always;
+              }
+
+              @page {
+                size: 50mm 25mm;
+                margin: 0;
+              }
+            }
+          </style>
+        </head>
+        <body>
+
+          <!-- Toolbar — hidden on print -->
+          <div class="no-print"
+               style="padding:15px; background:#fff; border-bottom:1px solid #ddd; display:flex; align-items:center; gap:15px;">
+            <button onclick="window.print()"
+                    style="padding:8px 20px; background:#875A7B; color:white; border:none; border-radius:4px; font-size:14px; cursor:pointer;">
+              🖨️ Print All
+            </button>
+            <span style="color:#666; font-size:13px;">
+              <t t-esc="len(docs)"/> label(s) ready to print
+            </span>
+          </div>
+
+          <!-- Labels -->
+          <div class="labels-grid">
+            <t t-foreach="docs" t-as="o">
+              <div class="zebra-label">
+
+                <div class="qr-section">
+                  <img class="qr-img"
+                       t-if="o.qr_image"
+                       t-att-src="image_data_uri(o.qr_image)"/>
+                </div>
+
+                <div class="info-section">
+                  <img class="logo-img"
+                       t-if="o.company_id.logo"
+                       t-att-src="image_data_uri(o.company_id.logo)"/>
+                  <div class="asset-id"><t t-esc="o.id"/></div>
+                </div>
+
+              </div>
+            </t>
+          </div>
+
+        </body>
+      </html>
+    </template>
+
+  </data>
+</odoo>

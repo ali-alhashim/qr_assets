@@ -106,12 +106,12 @@ class AssetAsset(models.Model):
     def _compute_qr_image(self):
         for record in self:
             if record.qr_code:
-                qr = qrcode.QRCode(version=1, box_size=10, border=4)
+                qr = qrcode.QRCode(version=1, box_size=8, border=1,error_correction=qrcode.constants.ERROR_CORRECT_H)
                 qr.add_data(record.qr_code)
                 qr.make(fit=True)
                 img = qr.make_image(fill='black', back_color='white')
                 temp = BytesIO()
-                img.save(temp, format="PNG")
+                img.save(temp, format="PNG", dpi=(203, 203))
                 record.qr_image = base64.b64encode(temp.getvalue())
             else:
                 record.qr_image = False
@@ -151,4 +151,14 @@ class AssetAsset(models.Model):
                         'received_date': fields.Date.today(),
                     })
         return super().write(vals)
+    
+    def action_view_qr_label_html(self):
+        self.ensure_one()
+        # This builds the URL for the HTML report
+        report_url = f'/report/html/qr_assets.report_asset_zebra/{self.id}'
+        return {
+            'type': 'ir.actions.act_url',
+            'url': report_url,
+            'target': 'new', # This opens it in a new tab
+        }
 

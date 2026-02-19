@@ -9,6 +9,7 @@
         'security/qr_assets_security.xml',
         'security/ir.model.access.csv',
         'report/asset_report.xml',
+        'report/assets_report.xml',
         'views/asset_views.xml',
         'views/hr_employee_view.xml',
         

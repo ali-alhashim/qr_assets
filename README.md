@@ -50,3 +50,7 @@ pip install -r requirements.txt</code></pre>
 <li>PostgreSQL must be running</li>
 <li>Addon path must include 'myAddon'</li>
 </ul>
+
+<h5>CLI</h5>
+<li>python3 odoo-bin -c odoo.conf -d databaseName -u qr_assets --dev=all </li>
+<li>python3 odoo-bin shell -c odoo.conf -d databaseName</li>
