@@ -54,3 +54,7 @@ pip install -r requirements.txt</code></pre>
 <h5>CLI</h5>
 <li>python3 odoo-bin -c odoo.conf -d databaseName -u qr_assets --dev=all </li>
 <li>python3 odoo-bin shell -c odoo.conf -d databaseName</li>
+<li>
+env['asset.asset'].search([])._compute_qr_image()
+env.cr.commit()
+</li>

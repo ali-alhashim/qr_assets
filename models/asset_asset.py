@@ -41,6 +41,10 @@ class AssetAsset(models.Model):
     model = fields.Char(string="Model/Brand")
     serialnumber = fields.Char(string="Serial Number", tracking=True)
 
+    invoice       = fields.Char(string='invoice')
+    purchase_order= fields.Char(string='PO')
+    acquisition_date = fields.Date(string='Acquisition Date')
+
     type_id = fields.Many2one(
         'asset.type', 
         string="Asset Type", 
