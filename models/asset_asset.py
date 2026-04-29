@@ -20,6 +20,19 @@ class AssetSubType(models.Model):
     name = fields.Char(string="Sub-Type Name", required=True)
     type_id = fields.Many2one('asset.type', string="Asset Type", ondelete='cascade')
 
+class AssetStyle(models.Model):
+    _name = 'asset.style'
+    _description = 'Asset Style'
+
+    name = fields.Char(string="Style Name", required=True)
+    code = fields.Char(string="Code") # Optional, for internal reference
+
+class AssetShape(models.Model):
+    _name = 'asset.shape'
+    _description = 'Asset Shape'
+
+    name = fields.Char(string="Shape Name", required=True)
+    code = fields.Char(string="Code") # Optional, for internal reference
 
 class AssetHistory(models.Model):
     _name = 'asset.history'
@@ -65,6 +78,20 @@ class AssetAsset(models.Model):
         ondelete='restrict',
         domain="[('type_id', '=', type_id)]",
         help="Select or create a new asset sub-type"
+    )
+
+    style_id = fields.Many2one(
+        'asset.style', 
+        string="Asset Style", 
+        ondelete='restrict',
+        help="Select or create a new asset style"
+    )
+
+    shape_id = fields.Many2one(
+        'asset.shape', 
+        string="Asset Shape", 
+        ondelete='restrict',
+        help="Select or create a new asset shape"
     )
 
     # Assignment

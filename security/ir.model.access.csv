@@ -9,3 +9,7 @@ access_asset_type_user,asset.type.user,model_asset_type,group_qr_asset_user,1,0,
 access_asset_type_mgr,asset.type.mgr,model_asset_type,group_qr_asset_manager,1,1,1,1
 access_asset_subtype_user,asset.subtype.user,model_asset_subtype,group_qr_asset_user,1,0,0,0
 access_asset_subtype_mgr,asset.subtype.mgr,model_asset_subtype,group_qr_asset_manager,1,1,1,1
+access_asset_style_user,asset.style.user,model_asset_style,group_qr_asset_user,1,0,0,0
+access_asset_style_mgr,asset.style.mgr,model_asset_style,group_qr_asset_manager,1,1,1,1
+access_asset_shape_user,asset.shape.user,model_asset_shape,group_qr_asset_user,1,0,0,0
+access_asset_shape_mgr,asset.shape.mgr,model_asset_shape,group_qr_asset_manager,1,1,1,1

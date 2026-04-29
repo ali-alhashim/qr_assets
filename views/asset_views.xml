@@ -126,6 +126,8 @@ action = {
                             <field name="serialnumber"/>
                             <field name="type_id" options="{'no_open': True, 'no_create_edit': False}"/>
                             <field name="subtype_id" options="{'no_open': True, 'no_create_edit': False}"/>
+                            <field name="style_id" options="{'no_open': True, 'no_create_edit': False}"/>
+                            <field name="shape_id" options="{'no_open': True, 'no_create_edit': False}"/>
                             <field name="vendor_id"/>
 
                             
