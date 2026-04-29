@@ -125,7 +125,12 @@ action = {
                             <field name="model"/>
                             <field name="serialnumber"/>
                             <field name="type_id" options="{'no_open': True, 'no_create_edit': False}"/>
+                            <field name="subtype_id" options="{'no_open': True, 'no_create_edit': False}"/>
                             <field name="vendor_id"/>
+
+                            
+                          
+                            
                         </group>
                         <group string="Assignment">
                             <field name="employee_id"/>

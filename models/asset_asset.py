@@ -13,6 +13,13 @@ class AssetType(models.Model):
     name = fields.Char(string="Type Name", required=True)
     code = fields.Char(string="Code") # Optional, for internal reference
 
+class AssetSubType(models.Model):
+    _name = 'asset.subtype'
+    _description = 'Asset Sub-Type'
+
+    name = fields.Char(string="Sub-Type Name", required=True)
+    type_id = fields.Many2one('asset.type', string="Asset Type", ondelete='cascade')
+
 
 class AssetHistory(models.Model):
     _name = 'asset.history'
@@ -50,6 +57,14 @@ class AssetAsset(models.Model):
         string="Asset Type", 
         ondelete='restrict',
         help="Select or create a new asset type"
+    )
+
+    subtype_id = fields.Many2one(
+        'asset.subtype', 
+        string="Asset Sub-Type", 
+        ondelete='restrict',
+        domain="[('type_id', '=', type_id)]",
+        help="Select or create a new asset sub-type"
     )
 
     # Assignment
