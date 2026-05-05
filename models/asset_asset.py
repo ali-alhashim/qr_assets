@@ -44,6 +44,7 @@ class AssetHistory(models.Model):
     received_date = fields.Date(string="Received Date", default=fields.Date.context_today)
     returned_date = fields.Date(string="Returned Date")
     note = fields.Text(string="Notes")
+    receiver_signature = fields.Binary(string="Receiver Signature", help="Signature of the employee receiving the asset")
 
     @api.depends('returned_date')
     def _compute_is_current(self):

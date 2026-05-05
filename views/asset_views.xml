@@ -115,15 +115,22 @@
                         <page string="Photos">
                             <field name="image_ids" widget="many2many_binary"/>
                         </page>
+
+
                         <page string="History">
-                            <field name="history_ids" readonly="1">
-                                <list>
-                                    <field name="employee_id"/>
-                                    <field name="received_date"/>
-                                    <field name="returned_date"/>
+                            <field name="history_ids">
+                                <list editable="bottom" delete="0" create="0">
+                                    <field name="employee_id"   readonly="1"/>
+                                    <field name="received_date" readonly="1"/>
+                                    <field name="returned_date" readonly="1"/>
+
+                                    <field name="receiver_signature" widget="signature" optional="show" readonly="receiver_signature != False" force_save="1"/>
+                                    <field name="note"/>
                                 </list>
                             </field>
                         </page>
+
+
                     </notebook>
                 </sheet>
                 <chatter/>
