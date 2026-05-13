@@ -55,6 +55,15 @@
                 <field name="employee_id"/>
                 <field name="status" widget="badge" decoration-info="status == 'assigned'"/>
                 <field name="value" sum="Total Value"/>
+                <field name="acquisition_date" optional="show"/>
+                <field name="subtype_id" optional="show"/>
+                <field name="style_id" optional="show"/>
+                <field name="shape_id" optional="show"/> 
+                <field name="employee_barcode" optional="show"/>
+                <field name="department_id" optional="show"/>
+                <field name="location_id" optional="show"/>
+                
+
             </list>
         </field>
     </record>
