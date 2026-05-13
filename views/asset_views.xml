@@ -133,7 +133,16 @@
                                     <field name="received_date" readonly="1"/>
                                     <field name="returned_date" readonly="1"/>
 
+                                    
+                                    
                                     <field name="receiver_signature" widget="signature" optional="show" readonly="receiver_signature != False" force_save="1"/>
+
+
+
+
+
+
+
                                     <field name="note"/>
                                 </list>
                             </field>
@@ -155,7 +164,10 @@
     </record>
 
     <menuitem id="menu_qr_assets_root" name="QR Assets" web_icon="qr_assets,static/description/icon.png"/>
-    <menuitem id="menu_assets_main" name="Management" parent="menu_qr_assets_root"/>
-    <menuitem id="menu_asset_list" name="Assets" parent="menu_assets_main" action="action_asset_asset"/>
+    <menuitem id="menu_assets_main"    name="Management" parent="menu_qr_assets_root"/>
+    <menuitem id="menu_asset_list"     name="Assets" parent="menu_assets_main" action="action_asset_asset"/>
+
+
+
 
 </odoo>

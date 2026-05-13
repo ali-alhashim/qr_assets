@@ -13,9 +13,11 @@
         'views/asset_views.xml',
         'views/hr_employee_view.xml',
         
+        
     ],
     'assets': {
-        'web.assets_backend': [],
+        'web.assets_backend': [
+        ],
     },
     'installable': True,
     'application': True,
