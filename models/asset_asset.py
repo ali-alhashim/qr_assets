@@ -141,6 +141,16 @@ class AssetAsset(models.Model):
         string="Preview Image"
     )
 
+    image_url = fields.Char(compute='_compute_image_url')
+
+    def _compute_image_url(self):
+        base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
+        for record in self:
+            if record.first_image_id:
+                record.image_url = f"{base_url}/web/content/{record.first_image_id.id}"
+            else:
+                record.image_url = False
+
     # QR System
     qr_code = fields.Char(string="QR URL", compute="_compute_qr_url", store=True)
     qr_image = fields.Binary(string="QR Code Image", compute="_compute_qr_image", store=True)

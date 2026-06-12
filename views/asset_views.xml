@@ -71,8 +71,7 @@
                 <field name="employee_barcode" optional="show"/>
                 <field name="department_id" optional="show"/>
                 <field name="location_id" optional="show"/>
-                
-
+                <field name="image_url" optional="show"/>
             </list>
         </field>
     </record>
