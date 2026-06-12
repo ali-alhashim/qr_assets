@@ -112,6 +112,10 @@ class AssetAsset(models.Model):
     status = fields.Selection([
         ('draft', 'Draft'),
         ('assigned', 'Assigned'),
+        ('new', 'New'),
+        ('good', 'Good'),
+        ('fair', 'Fair'),
+        ('old', 'Old'),
         ('damaged', 'Damaged'),
         ('sold', 'Sold'),
         ('stolen', 'Stolen'),
@@ -129,6 +133,13 @@ class AssetAsset(models.Model):
     dimension = fields.Char(string="Dimensions")
     description = fields.Text(string="Description")
     image_ids = fields.One2many('ir.attachment', 'res_id', domain=[('res_model', '=', 'asset.asset')], string="Photos")
+
+
+    first_image_id = fields.Many2one(
+        'ir.attachment', 
+        compute='_compute_first_image_id', 
+        string="Preview Image"
+    )
 
     # QR System
     qr_code = fields.Char(string="QR URL", compute="_compute_qr_url", store=True)
@@ -162,6 +173,15 @@ class AssetAsset(models.Model):
                 record.qr_image = base64.b64encode(temp.getvalue())
             else:
                 record.qr_image = False
+
+    @api.depends('image_ids')
+    def _compute_first_image_id(self):
+        for record in self:
+            # Grab the first record from the One2many if it exists
+            if record.image_ids:
+                record.first_image_id = record.image_ids[0].id
+            else:
+                record.first_image_id = False
 
 
 
